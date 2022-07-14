@@ -6,6 +6,9 @@ import Cart from '../pages/Cart'
 import Catalog from '../pages/Catalog'
 import Home from '../pages/Home'
 import Product from '../pages/Product'
+import ProductViewModal from './ProductViewModal'
+import Accessories from '../pages/Accessories'
+import Contact from '../pages/Contact'
 const Layout = () => {
   return (
     <div>
@@ -14,8 +17,11 @@ const Layout = () => {
           <Route path='/' element={<Home/>} />
           <Route path='/cart' element={<Cart/>} />
           <Route path='/catalog' element={<Catalog/>} />
-          <Route path='/product' element={<Product/>} />
+          <Route path='/catalog/:slug' element={<Product/>}/>
+          <Route path='/accessories' element={<Accessories/>}/>
+          <Route path='/contact' element={<Contact/>}/>
         </Routes>
+      <ProductViewModal/>
       <Footer/>
     </div>
   )

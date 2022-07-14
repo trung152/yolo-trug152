@@ -5,12 +5,15 @@ import './assets/boxicons-2.0.7/css/boxicons.min.css'
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom'
 import Layout from './components/Layout';
-
+import { store } from './redux/store';
+import { Provider } from 'react-redux'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+    <Provider store={store}>
       <Layout/>
+    </Provider>
     </BrowserRouter>
   </React.StrictMode>
 );

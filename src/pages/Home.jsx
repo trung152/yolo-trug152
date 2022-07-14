@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useEffect}from 'react'
 import Helmet from '../components/Helmet'
 import HeroSlider from '../components/HeroSlider'
 import heroSliderData from '../assets/fake-data/hero-slider'
@@ -12,6 +12,9 @@ import ProductCard from '../components/ProductCard'
 import banner from '../assets/images/banner.png'
 
 const Home = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
   return (
     <div className="container">
       <div className="main">
@@ -29,9 +32,9 @@ const Home = () => {
               >
               {
                   policy.map((item,index)=>(
-                    <Link to='/policy'>
+                    <Link    key={index} to='/policy'>
                   <PolicyCard
-                  key={index}
+               
                   name={item.name}
                   description={item.description}
                   icon={item.icon}

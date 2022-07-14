@@ -2,11 +2,17 @@
 @import "./mixins";
 @import "./base";
 
-@import './conponents/header';
-@import './conponents/home';
-@import './conponents/footer';
-@import './conponents/hero-slider';
-@import './conponents/button';
-@import './conponents/section';
-@import './conponents/policy-card';
-@import './conponents/product-card';
+@import './components/header';
+@import './components/home';
+@import './components/footer';
+@import './components/hero-slider';
+@import './components/button';
+@import './components/section';
+@import './components/policy-card';
+@import './components/product-card';
+@import './components/catalog';
+@import './components/custom-checkbox';
+@import './components/product';
+@import './components/product-view-modal';
+@import './components/cart';
+

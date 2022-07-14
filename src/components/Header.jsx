@@ -1,7 +1,7 @@
-import React, {useRef , useEffect} from 'react'
+import React, {useRef , useEffect, useState} from 'react'
 import { NavLink , Link} from 'react-router-dom'
 import logo from '../assets/images/Logo-2.png'
-
+import { useSelector } from 'react-redux'
 const mainNav = [
     {
         display : 'Trang chủ',
@@ -21,7 +21,16 @@ const mainNav = [
     },
 ]
 const Header = () => {
+    const cartItems = useSelector((state) => state.cartItems.value);
+    
+    const [totalProducts, settotalProducts] = useState(0);
+    console.log(totalProducts)
 
+  useEffect(()=>{
+    settotalProducts(
+        cartItems.reduce((total, item) => total + Number(item.quantity), 0)
+      );
+  },[cartItems])
     const headerRef = useRef(null)
     const menuRef = useRef()
     useEffect(()=>{
@@ -74,9 +83,10 @@ const Header = () => {
                     <div className="header__menu__item header__menu__right__item">
                         <i className="bx bx-search"></i>
                     </div>
-                    <div className="header__menu__item header__menu__right__item">
+                    <div className="header__menu__item header__menu__right__item header__menu__item__bag">
                         <Link to='/cart'>
                             <i className="bx bx-shopping-bag"></i>
+                            <span className='header__menu__item__quantity'>{totalProducts}</span>
                         </Link>
                     </div>
                     <div className="header__menu__item header__menu__right__item">
