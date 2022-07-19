@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { updateItem, removeItem } from "../redux/shopping-cart/cartItemSlice";
+import {  removeItem, increase, decrease } from "../redux/shopping-cart/cartItemSlice";
 
 const CartItem = (props) => {
     const dispatch = useDispatch();
@@ -11,22 +11,14 @@ const CartItem = (props) => {
 
  const  updateQuantity = (type)=>{
     if(type === '+'){
-        dispatch(updateItem({
-            ...item,
-            quantity : quantity + 1,
-        }))
+        dispatch(increase(item.idv4))
     }
     if(type === '-'){
-        dispatch(updateItem({
-            ...item,
-            quantity : quantity - 1 < 1 ? 1 : quantity -1,
-        }))
+      dispatch(decrease(item.idv4))
     }
   }
 const handleRemoveItem = ()=>{
-    dispatch(removeItem({
-        ...item
-    }))
+    dispatch(removeItem(item.idv4))
 }
   useEffect(() => {
     setItem(props.item);

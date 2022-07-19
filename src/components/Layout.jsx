@@ -9,7 +9,10 @@ import Product from '../pages/Product'
 import ProductViewModal from './ProductViewModal'
 import Accessories from '../pages/Accessories'
 import Contact from '../pages/Contact'
+import About from '../pages/About'
+
 const Layout = () => {
+ 
   return (
     <div>
       <Header/>
@@ -20,6 +23,7 @@ const Layout = () => {
           <Route path='/catalog/:slug' element={<Product/>}/>
           <Route path='/accessories' element={<Accessories/>}/>
           <Route path='/contact' element={<Contact/>}/>
+          <Route path='/about' element={<About/>}/>
         </Routes>
       <ProductViewModal/>
       <Footer/>

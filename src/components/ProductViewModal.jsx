@@ -8,7 +8,6 @@ import { remove } from '../redux/product-modal/productModalSlice'
 
 
 const ProductViewModal = () => {
-
     const productSlug = useSelector((state) => state.productModal.value)
    /*  console.log(productData.getProductBySlug(productSlug)) */
     const dispatch = useDispatch()

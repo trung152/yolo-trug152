@@ -16,8 +16,6 @@ const Product = props => {
     window.scrollTo(0, 0)
   }, [product])
   
-
-
 const relatedProducts = productData.getProducts(8)
 
   return (

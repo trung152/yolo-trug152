@@ -5,6 +5,7 @@ import Button from "./Button";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addItem } from "../redux/shopping-cart/cartItemSlice";
+import { v4 as uuidv4 } from 'uuid';
 const ProductView = (props) => {
   const dispatch = useDispatch();
 
@@ -74,6 +75,7 @@ const ProductView = (props) => {
    const addToCart = () => {
     if (check()) {
       let newItem = {
+        idv4 : uuidv4(),
         slug: product.slug,
         color: color,
         size: size,

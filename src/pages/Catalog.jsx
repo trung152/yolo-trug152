@@ -1,95 +1,41 @@
-import React, { useCallback, useState, useEffect, useRef } from "react";
+import React, { useRef , useEffect } from "react";
 import Helmet from "../components/Helmet";
-import productData from "../assets/fake-data/products";
 import category from "../assets/fake-data/category";
 import colors from "../assets/fake-data/product-color";
 import size from "../assets/fake-data/product-size";
 import CheckBox from "../components/CheckBox";
 import Button from "../components/Button";
 import InfinityList from "../components/InfinityList";
+import { useDispatch, useSelector } from "react-redux";
+import { categoryRdc, colorRdc, sizeRdc , clearRdc } from "../redux/catalog/catalogSlice";
+import {
+  updateProduct,
+  categorySelector,
+  colorSelector,
+  sizeSelector,
+} from "../redux/selector";
+
 
 const Catalog = () => {
+  const categorySlt = useSelector(categorySelector);
+  const colorSlt = useSelector(colorSelector);
+  const sizeSlt = useSelector(sizeSelector);
+  // const dataProduct = useSelector((state) => state.catalog.value);
+  const product = useSelector(updateProduct);
+  const dispatch = useDispatch();
   const filterRef = useRef(null);
 
   const showHideFilter = () => {
     filterRef.current.classList.toggle("active");
   };
 
-  const initFilter = {
-    category: [],
-    color: [],
-    size: [],
-  };
+  const clearFilter = ()=>{
+    dispatch(clearRdc())
+  }
 
-  const productsList = productData.getAllProducts();
-  const [products, setProducts] = useState(productsList);
-  const [filter, setFilter] = useState(initFilter);
-
-  const filterSelect = (type, checked, item) => {
-    if (checked) {
-      switch (type) {
-        case "CATEGORY":
-          setFilter({
-            ...filter,
-            category: [...filter.category, item.categorySlug],
-          });
-          break;
-        case "COLOR":
-          setFilter({ ...filter, color: [...filter.color, item.color] });
-          break;
-        case "SIZE":
-          setFilter({ ...filter, size: [...filter.size, item.size] });
-          break;
-        default:
-      }
-    } else {
-      switch (type) {
-        case "CATEGORY":
-          const newCategory = filter.category.filter(
-            (e) => e !== item.categorySlug
-          );
-          setFilter({ ...filter, category: newCategory });
-          break;
-        case "COLOR":
-          const newColor = filter.color.filter((e) => e !== item.color);
-          setFilter({ ...filter, color: newColor });
-          break;
-        case "SIZE":
-          const newSize = filter.size.filter((e) => e !== item.size);
-          setFilter({ ...filter, size: newSize });
-          break;
-        default:
-      }
-    }
-  };
-
-  const clearFilter = () => setFilter(initFilter);
-
-  const updateProducts = useCallback(() => {
-    let temp = productsList;
-    if (filter.category.length > 0) {
-      temp = temp.filter((e) => filter.category.includes(e.categorySlug));
-    }
-    if (filter.color.length > 0) {
-      temp = temp.filter((e) => {
-        const check = e.colors.find((color) => filter.color.includes(color));
-        return check !== undefined;
-      });
-    }
-    if (filter.size.length > 0) {
-      temp = temp.filter((e) => {
-        const check = e.size.find((size) => filter.size.includes(size));
-        return check !== undefined;
-      });
-    }
-    setProducts(temp);
-  }, [filter, productsList]);
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    updateProducts();
-  }, [updateProducts]);
-  /* useEffect(() => {
-  }, []) */
+ useEffect(()=>{
+  dispatch(clearRdc())
+ },[])
   return (
     <div className="container">
       <div className="main">
@@ -120,10 +66,16 @@ const Catalog = () => {
                     >
                       <CheckBox
                         label={item.display}
-                        onChange={(input) =>
-                          filterSelect("CATEGORY", input.checked, item)
+                        onChange={
+                          (input) =>
+                            dispatch(
+                              categoryRdc({
+                                categorySlug: item.categorySlug,
+                                checked: input.checked,
+                              })
+                            )
                         }
-                        checked={filter.category.includes(item.categorySlug)}
+                        checked={categorySlt.includes(item.categorySlug)}
                       />
                     </div>
                   ))}
@@ -139,10 +91,16 @@ const Catalog = () => {
                     >
                       <CheckBox
                         label={item.display}
-                        onChange={(input) =>
-                          filterSelect("COLOR", input.checked, item)
+                        onChange={
+                          (input) =>
+                            dispatch(
+                              colorRdc({
+                                color: item.color,
+                                checked: input.checked,
+                              })
+                            )
                         }
-                        checked={filter.color.includes(item.color)}
+                        checked={colorSlt.includes(item.color)}
                       />
                     </div>
                   ))}
@@ -159,9 +117,14 @@ const Catalog = () => {
                       <CheckBox
                         label={item.display}
                         onChange={(input) =>
-                          filterSelect("SIZE", input.checked, item)
+                          dispatch(
+                            sizeRdc({
+                              size: item.size,
+                              checked: input.checked,
+                            })
+                          )
                         }
-                        checked={filter.size.includes(item.size)}
+                        checked={sizeSlt.includes(item.size)}
                       />
                     </div>
                   ))}
@@ -176,7 +139,7 @@ const Catalog = () => {
               </div>
             </div>
             <div className="catalog__content">
-              <InfinityList data={products} />
+              <InfinityList data={product} />
             </div>
           </div>
         </Helmet>

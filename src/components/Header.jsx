@@ -2,6 +2,7 @@ import React, {useRef , useEffect, useState} from 'react'
 import { NavLink , Link} from 'react-router-dom'
 import logo from '../assets/images/Logo-2.png'
 import { useSelector } from 'react-redux'
+import { caculator } from '../redux/selector'
 const mainNav = [
     {
         display : 'Trang chủ',
@@ -21,16 +22,8 @@ const mainNav = [
     },
 ]
 const Header = () => {
-    const cartItems = useSelector((state) => state.cartItems.value);
-    
-    const [totalProducts, settotalProducts] = useState(0);
-    console.log(totalProducts)
+    const {totalProducts} = useSelector(caculator);
 
-  useEffect(()=>{
-    settotalProducts(
-        cartItems.reduce((total, item) => total + Number(item.quantity), 0)
-      );
-  },[cartItems])
     const headerRef = useRef(null)
     const menuRef = useRef()
     useEffect(()=>{

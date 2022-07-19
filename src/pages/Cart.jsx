@@ -1,32 +1,20 @@
 import React, { useState, useEffect } from "react";
-
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
 import productData from "../assets/fake-data/products";
 import Button from "../components/Button";
 import CartItem from "../components/CartItem";
 import Helmet from "../components/Helmet";
-
+import { cartItemSelector, caculator } from "../redux/selector";
 const Cart = () => {
-  const cartItems = useSelector((state) => state.cartItems.value);
-
+  const cartItems = useSelector(cartItemSelector);
+  const {totalPrice,totalProducts} = useSelector(caculator)
   const [cartProduct, setcartProduct] = useState([]);
-
-  const [totalProducts, settotalProducts] = useState(0);
-
-  const [totalPrice, settotalPrice] = useState(0);
-
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  },[])
   useEffect(() => {
     setcartProduct(productData.getCartItemsInfo(cartItems));
-    settotalPrice(
-      cartItems.reduce((total, item) => {
-        return total + Number(item.price) * Number(item.quantity);
-      }, 0)
-    );
-    settotalProducts(
-      cartItems.reduce((total, item) => total + Number(item.quantity), 0)
-    );
   }, [cartItems]);
 
   return (

@@ -10,7 +10,6 @@
             position: absolute;
             top: 0;
             left: 50%;
-            transform: translateX(-50%);
             height: 100%;
             &:nth-child(1){
                 transform: translateX(-50%) scale(1);
